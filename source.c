@@ -69,9 +69,14 @@ char mat_create_random_unimodular(MAT *mat)
 
     if(mat->rows!=mat->cols)
         determinant = 1;
+    else if(mat->rows==1)
+        determinant=mat->elem[0];
+    else if(mat->rows==2)
+        determinant=mat->elem[0]*mat->elem[3]-mat->elem[1]*mat->elem[2];
     else
     {
-
+        for(int i=0;i<mat->rows;i++)
+            determinant+=
     }
 
     return determinant;
@@ -84,7 +89,7 @@ int main(void)
 
     mat=mat_create_with_type(3,3);
     mat_print(mat);
-    determinant=mat_create_random_unimodular;
+    determinant=mat_create_random_unimodular(mat);
 
     if (determinant==1)
         puts("Unimodular.");
