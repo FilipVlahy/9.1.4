@@ -60,12 +60,31 @@ void mat_print(MAT *mat)
     }
 }
 
+MAT *tmp_mat(MAT *mat, unsigned int mat_i, unsigned int mat_j)
+{
+    int tmp_i,tmp_j;
+    MAT *tmp_mat;
+
+    tmp_mat = mat_create_with_type(mat->rows-1,mat->cols-1);    
+
+    for(int i=0;i<mat->rows;i++)
+    {
+        for (int j=0;i<mat->cols;i++)
+        {
+            tmp_mat->elem[(mat->cols-1)*tmp_i+tmp_j]=mat->elem[mat->cols*i+j];
+        }
+              
+    }
+
+    return tmp_mat;
+}
+
 char mat_create_random_unimodular(MAT *mat)
 {
     int determinant=0;
 
     //mat_unit(mat);
-    mat_random(mat);
+    //mat_random(mat);
 
     if(mat->rows!=mat->cols)
         determinant = 1;
@@ -76,7 +95,7 @@ char mat_create_random_unimodular(MAT *mat)
     else
     {
         for(int i=0;i<mat->rows;i++)
-            determinant+=
+            determinant+=pow(-1,i)*mat->elem[i]*mat_create_random_unimodular(tmp_mat(mat,0,i));
     }
 
     return determinant;
@@ -88,8 +107,9 @@ int main(void)
     char determinant;
 
     mat=mat_create_with_type(3,3);
-    mat_print(mat);
+    mat_random(mat);
     determinant=mat_create_random_unimodular(mat);
+    mat_print(mat);
 
     if (determinant==1)
         puts("Unimodular.");
