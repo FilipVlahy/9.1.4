@@ -24,9 +24,11 @@ MAT *mat_create_with_type(unsigned int rows, unsigned int cols)
 
 void mat_unit(MAT *mat)
 {
-    for(int i=0;i<mat->rows;i++)
+    int i,j;
+
+    for(i=0;i<mat->rows;i++)
     {
-        for(int j=0;i<mat->cols;j++)
+        for(j=0;i<mat->cols;j++)
         {
             if (i==j)
                 mat->elem[mat->cols*i+j]=1;
@@ -48,9 +50,11 @@ void mat_random(MAT *mat)
 
 void mat_print(MAT *mat)
 {
-    for(int i=0;i<mat->rows;i++)
+    int i,j;
+
+    for(i=0;i<mat->rows;i++)
     {
-        for(int j=0;i<mat->cols;j++)
+        for(j=0;i<mat->cols;j++)
             printf("%.1f ",mat->elem[mat->cols*i+j]);
         puts("\n");
     }
@@ -84,13 +88,10 @@ int main(void)
 
     if (determinant==1)
         puts("Unimodular.");
+    else if (determinant==-1)
+        puts("Unimodular.");
     else
-    {
-        if (determinant==-1)
-            puts("Unimodular.");
-        else
-            puts("Non-Unimodular.");
-    }
+        puts("Non-Unimodular.");
 
     free(mat->elem);
     free(mat);
